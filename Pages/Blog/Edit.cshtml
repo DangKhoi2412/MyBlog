@@ -1,0 +1,79 @@
+@page "/Blog/Edit/{id:int}"
+@model ASP.NET_Razor_Final.Pages_Blog.EditModel
+
+@{
+    ViewData["Title"] = "Soạn thảo bài viết";
+}
+
+<form method="post">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <h2 class="mb-0">@ViewData["Title"]</h2>
+        <input hidden asp-for="Article.Id">
+        <div class="d-flex gap-2">
+            <a asp-page="Index" class="btn btn-secondary">
+                <i class="bi bi-list-ul me-2"></i> Về danh sách
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-plus-circle-fill me-2"></i> Lưu thay đổi
+            </button>
+        </div>
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="form-floating">
+                        <input asp-for="Article.Title" class="form-control form-control-lg" placeholder="Tiêu đề" />
+                        <label asp-for="Article.Title" class="fw-bold">Tiêu đề <span class="text-danger">*</span></label>
+                    </div>
+                    <span asp-validation-for="Article.Title" class="text-danger small mt-1 d-block"></span>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header fw-bold">
+                    Nội dung chi tiết
+                </div>
+                <div class="card-body">
+                    <textarea asp-for="Article.Content" id="richTextEditor"></textarea>
+                    <span asp-validation-for="Article.Content" class="text-danger small mt-1 d-block"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header fw-bold">
+                    Thông tin
+                </div>
+                <div class="card-body">
+                    <label asp-for="Article.Created" class="form-label">Ngày tạo <span class="text-danger">*</span></label>
+                    <input asp-for="Article.Created" type="datetime-local" class="form-control" />
+                    <span asp-validation-for="Article.Created" class="text-danger small mt-1 d-block"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script src="https://cdn.tiny.cloud/1/8p9bh2ti88g6eik8a2eczauupyh9wgb64msue6jvmpoxzz9v/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            tinymce.init({
+                selector: '#richTextEditor', // Chọn textarea có id là 'richTextEditor'
+                plugins: 'autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount',
+                toolbar: 'undo redo | blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+                height: 450, // Chiều cao của trình soạn thảo
+                menubar: false, // Ẩn menu bar cho gọn
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+            });
+        });
+    </script>
+}

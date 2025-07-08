@@ -1,0 +1,19 @@
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+
+@{
+    // Dùng await để code an toàn và hiệu quả hơn
+    var result = await authorizationService.AuthorizeAsync(this.User, "ShowAdminMenu");
+}
+@if (result.Succeeded)
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Quản lý
+        </a>
+        <div class="dropdown-menu" aria-labelledby="adminDropdown">
+            <a class="dropdown-item" asp-area="Admin" asp-page="/Roles/Index">Quản lý Role</a>
+            <a class="dropdown-item" asp-area="Admin" asp-page="/User/Index">Quản lý User</a>
+        </div>
+    </li>
+}

@@ -1,0 +1,812 @@
+﻿@page
+@using ASP.NET_Razor_Final.models
+@model IndexModel
+@{
+    ViewData["Title"] = "Trang chủ";
+    var posts = ViewData["post"] as List<Article>;
+    var q = ViewData["q"] as Article;
+}
+
+@section Styles {
+    <style>
+        /* General Body and Container Styles for Light Theme - Simplified Colors */
+        body {
+            background-color: #f8f8f8; /* Light background for the body */
+            color: #333333; /* Dark text color for readability */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+            line-height: 1.6; /* Improved readability */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px; /* Default padding for larger screens */
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-color: #ffffff; /* White background for hero section */
+            border-radius: 15px;
+            padding: 60px 30px;
+            margin-bottom: 50px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e0e0e0; /* Subtle border */
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Lighter, subtle background pattern */
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%23d4e6f1" stop-opacity="0.05"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>');
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #222222; /* Darker color for title */
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: none; /* No text shadow on light theme */
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #555555; /* Medium grey for subtitle */
+            margin-bottom: 25px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: #666666; /* Slightly darker grey for description */
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-simple {
+            background-color: #007bff; /* Standard Bootstrap primary blue */
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            color: #ffffff; /* White text */
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-outline-simple {
+            background: transparent;
+            border: 2px solid #007bff; /* Standard Bootstrap primary blue outline */
+            padding: 12px 28px;
+            border-radius: 50px;
+            color: #007bff; /* Primary blue for outline text */
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Section Titles (without underline) */
+        .section-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #222222;
+            position: relative;
+            text-shadow: none;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background-color: #ffffff; /* White background for sections */
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f0f0f0; /* Light grey for stat cards */
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #007bff; /* Primary blue for numbers */
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #555555;
+            font-weight: 500;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 60px 0; /* Consistent vertical padding for sections */
+            margin-bottom: 50px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding: 0 30px; /* Padding for content inside the section */
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666666;
+            word-wrap: break-word; /* Ensure long words break */
+            overflow-wrap: break-word; /* Modern property for word breaking */
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        .about-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .profile-card {
+            background-color: #f0f0f0; /* Light grey for profile card */
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e0e0e0;
+            max-width: 400px; /* Limit width to ensure it doesn't overflow on small screens */
+            margin: 0 auto; /* Center the card horizontally on all screens */
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #007bff; /* Primary blue for avatar background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 4rem;
+            color: #ffffff; /* White icon */
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.2);
+        }
+
+        .profile-card h3 {
+            margin-bottom: 15px;
+            color: #222222;
+        }
+
+        .profile-card p {
+            color: #555555;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow social links to wrap if too many */
+            gap: 15px; /* Spacing between social icons */
+        }
+
+        
+        .social-links a {
+            font-size: 1.8rem;
+            text-decoration: none;
+            /* TỐI ƯU: Thêm 'color' vào transition để đổi màu mượt mà */
+            transition: transform 0.2s ease, color 0.2s ease; 
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px); /* Giữ nguyên hiệu ứng di chuyển */
+            /* Màu sẽ được ghi đè bởi quy tắc riêng bên dưới */
+        }
+
+        /* Facebook */
+        .social-links a[href*="facebook.com"] {
+            color: #1877F2; /* Màu xanh đặc trưng của Facebook */
+        }
+        .social-links a[href*="facebook.com"]:hover {
+            color: #1464c9; /* Tối hơn một chút khi hover */
+        }
+
+        /* TikTok */
+        .social-links a[href*="tiktok.com"] {
+            color: #000000; /* Màu đen đặc trưng của TikTok */
+        }
+        .social-links a[href*="tiktok.com"]:hover {
+            color: #333333; /* Hơi xám đi khi hover */
+        }
+
+        /* Email */
+        .social-links a[href*="mailto:"] {
+            color: #6c757d; /* Màu xám trung tính */
+        }
+        .social-links a[href*="mailto:"]:hover {
+            color: #5a6268; /* Tối hơn một chút khi hover */
+        }
+
+        /* GitHub */
+        .social-links a[href*="github.com"] {
+            color: #181717; /* Màu đen của GitHub */
+        }
+        .social-links a[href*="github.com"]:hover {
+            color: #333333; /* Hơi xám đi khi hover */
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 60px 0;
+            background-color: #ffffff;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 0 30px;
+        }
+
+        .skill-card {
+            background-color: #f0f0f0; /* Light grey for skill cards */
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+        }
+
+        .skill-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background-color: #007bff; /* Primary blue for skill icon background */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+        }
+
+        .skill-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #222222;
+            margin-bottom: 15px;
+        }
+
+        .skill-description {
+            color: #666666;
+            line-height: 1.6;
+        }
+
+        /* Posts Section */
+        .posts-section {
+            padding: 60px 0;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 0 30px;
+        }
+
+        .post-card {
+            background-color: #f0f0f0; /* Light grey for post cards */
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+        }
+
+        .post-image {
+            height: 200px;
+            background-color: #007bff; /* Primary blue for post image background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.8;
+        }
+
+        .post-content {
+            padding: 25px;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #222222;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .post-excerpt {
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #777777;
+        }
+
+        .read-more {
+            color: #007bff; /* Primary blue for read more link */
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .alert-info {
+            background-color: #eaf5ff; /* Light blue alert background */
+            color: #0056b3; /* Darker blue text for alert */
+            border-color: #b8daff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert-heading {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #0056b3;
+        }
+
+        .text-muted {
+            color: #777777 !important; /* Adjusted for light theme */
+        }
+
+        /* Responsive Adjustments - Optimized for Mobile */
+        @@media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            .about-content {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens for About section */
+                gap: 40px; /* Reduce gap between stacked items */
+                padding: 0 20px; /* Slightly more padding for about-content on tablet-ish screens */
+            }
+            .profile-card {
+                /* max-width and margin: auto; are already set in default .profile-card rule */
+                padding: 30px; /* Slightly reduce padding for profile card */
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .container {
+                padding: 15px; /* Reduce container padding on smaller screens */
+            }
+            .hero-section {
+                padding: 40px 20px; /* Adjust hero padding */
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            .hero-description {
+                font-size: 1rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn-primary-simple, .btn-outline-simple {
+                width: 90%; /* Make buttons wider on small screens */
+                max-width: 300px;
+                padding: 12px 20px; /* Smaller padding for buttons */
+            }
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            .stats-grid, .skills-grid, .posts-grid {
+                grid-template-columns: 1fr; /* Ensure single column layout */
+                padding: 0 15px; /* Adjust padding for grid sections */
+            }
+            .about-section, .skills-section, .posts-section, .stats-section {
+                padding: 30px 0; /* Remove horizontal padding from sections themselves, content uses its own padding */
+            }
+            .about-content {
+                padding: 0 15px; /* IMPORTANT: Adjust padding inside about-content to prevent text overflow */
+            }
+            .profile-card {
+                padding: 25px 15px; /* Reduce padding for profile card on smaller phones */
+                max-width: 320px; /* Further limit max-width if needed for very small screens */
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .hero-section {
+                padding: 30px 15px;
+            }
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            .hero-subtitle {
+                font-size: 0.95rem; /* Slightly smaller subtitle */
+            }
+            .profile-avatar {
+                width: 100px; /* Slightly smaller avatar */
+                height: 100px;
+                font-size: 2.8rem;
+                margin-bottom: 20px; /* Reduce margin */
+            }
+            .profile-card h3 {
+                font-size: 1.3rem; /* Smaller heading */
+            }
+            .profile-card p {
+                font-size: 0.9rem; /* Smaller text */
+            }
+            .social-links a {
+                font-size: 1.6rem; /* Slightly smaller social icons */
+            }
+            .stat-number {
+                font-size: 2.2rem; /* Smaller stat numbers */
+            }
+            .stat-label {
+                font-size: 0.85rem; /* Smaller stat labels */
+            }
+            .skill-icon {
+                width: 60px; /* Smaller skill icons */
+                height: 60px;
+                font-size: 1.8rem;
+            }
+            .post-title {
+                font-size: 1.2rem;
+            }
+            .post-excerpt {
+                font-size: 0.9rem; /* Smaller post excerpt */
+            }
+        }
+    </style>
+}
+
+<div class="container">
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Xin chào, tôi là Khôi</h1>
+            <p class="hero-subtitle">Sinh viên năm nhất & Backend Developer</p>
+            <p class="hero-description">
+                Chào mừng bạn đến với không gian cá nhân của tôi! Hiện tại, tôi là sinh viên năm nhất tại **Đại học Kinh tế TP.HCM (UEH)**, với niềm đam mê sâu sắc về phát triển Backend. Tôi luôn tìm tòi và học hỏi để xây dựng những hệ thống mạnh mẽ và hiệu quả.
+            </p>
+            <div class="cta-buttons">
+                <a href="/Blog/Index" class="btn-primary-simple">
+                    <i class="fas fa-newspaper"></i>
+                    Đọc bài viết
+                </a>
+                <a href="#about" class="btn-outline-simple">
+                    <i class="fas fa-user"></i>
+                    Tìm hiểu thêm
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <h2 class="section-title">Thống kê nhanh (giả)</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">1+</div>
+                <div class="stat-label">Năm học</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2+</div>
+                <div class="stat-label">Dự án cá nhân</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">151+</div>
+                <div class="stat-label">Bài viết</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Lượt đọc</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <h2 class="section-title">Về tôi</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    Tôi tên là Phạm Đăng Khôi, là sinh viên năm nhất tại **Đại học Kinh tế TP.HCM (UEH)**, chuyên ngành Công nghệ thông tin. Dù còn là tân binh, tôi đã và đang không ngừng khám phá thế giới lập trình, đặc biệt là mảng **Backend Development**.
+                </p>
+                <p>
+                    Chuyên môn chính của tôi tập trung vào **.NET** và **ASP.NET** để xây dựng các ứng dụng phía máy chủ mạnh mẽ và có khả năng mở rộng. Về cơ sở dữ liệu, tôi làm việc chủ yếu với **SQL Server**. Đối với phần frontend, tôi có kiến thức cơ bản và sử dụng **Bootstrap** để tạo giao diện người dùng đơn giản và responsive.
+                </p>
+                <p>
+                    Tôi luôn nhiệt huyết tìm hiểu các công nghệ mới và áp dụng chúng vào các dự án cá nhân, với mục tiêu trở thành một Backend Developer vững vàng trong tương lai. Blog này là nơi tôi chia sẻ những kiến thức, trải nghiệm và hành trình học tập của mình.
+                </p>
+            </div>
+            <div class="about-image">
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <i class="fas fa-server"></i> </div>
+                    <h3 style="margin-bottom: 15px; color: #222222;">Đăng Khôi</h3>
+                    <p style="color: #555555; margin-bottom: 20px;">Sinh viên & Backend Enthusiast</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/angkhoi.313148" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="@("https://www.tiktok.com/@dangkhoi241206")" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="mailto:phamdangkhoi241206@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="https://github.com/DangKhoi2412" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="skills-section">
+        <h2 class="section-title">Công nghệ được sử dụng</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-code"></i> </div>
+                <h3 class="skill-title">ASP.NET Core Razor Pages</h3>
+                <p class="skill-description">
+                    Phát triển ứng dụng web dựa trên trang, kết hợp logic C# với HTML để xây dựng giao diện người dùng.
+                </p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3 class="skill-title">Entity Framework Core</h3>
+                <p class="skill-description">
+                    Sử dụng ORM để tương tác với cơ sở dữ liệu SQL Server, quản lý dữ liệu hiệu quả qua code.
+                </p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-user-lock"></i> </div>
+                <h3 class="skill-title">ASP.NET Core Identity</h3>
+                <p class="skill-description">
+                    Triển khai xác thực (Authentication) và phân quyền (Authorization), tích hợp đăng nhập ngoài với Google, Facebook.
+                </p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-stream"></i> </div>
+                <h3 class="skill-title">LINQ (Language Integrated Query)</h3>
+                <p class="skill-description">
+                    Truy vấn dữ liệu từ nhiều nguồn khác nhau (bao gồm database) một cách thống nhất và mạnh mẽ.
+                </p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fab fa-bootstrap"></i>
+                </div>
+                <h3 class="skill-title">Bootstrap</h3>
+                <p class="skill-description">
+                    Sử dụng framework CSS phổ biến để xây dựng giao diện frontend responsive và hiện đại.
+                </p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-network-wired"></i> </div>
+                <h3 class="skill-title">Networking (Request/Response)</h3>
+                <p class="skill-description">
+                    Hiểu biết về giao tiếp Client-Server, HTTP Request/Response, và các khái niệm mạng cơ bản.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="posts-section">
+        <h2 class="section-title">Bài viết gần đây</h2>
+
+        @if (q != null)
+        {
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">Bài viết nổi bật:</h4>
+                <p class="mb-0">@q.Title</p>
+            </div>
+        }
+
+        @if (posts != null && posts.Any())
+        {
+            <div class="posts-grid">
+                @foreach (var post in posts.Take(6))
+                {
+                    <article class="post-card">
+                        <div class="post-image">
+                            <i class="fas fa-file-code"></i> </div>
+                        <div class="post-content">
+                            <h3 class="post-title">@post.Title</h3>
+                            <p class="post-excerpt">
+                                @Html.Raw(post.Content != null && post.Content.Length > 150
+                                ? post.Content.Substring(0, 150) + "..."
+                                : post.Content ?? "Nội dung đang được cập nhật...")
+                            </p>
+                            <div class="post-meta">
+                                <span><i class="fas fa-calendar"></i> @post.Created.ToString("dd/MM/yyyy")</span>
+                                <a href="/Blog/xemchitiet/@post.Id" class="read-more">
+                                    Đọc tiếp <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+
+            <div class="text-center mt-5">
+                <a href="/Blog/Index" class="btn-primary-simple">
+                    <i class="fas fa-list"></i>
+                    Xem tất cả bài viết
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i class="fas fa-edit" style="font-size: 4rem; color: #777777;"></i>
+                </div>
+                <h3 class="mb-3" style="color: #222222;">Chưa có bài viết nào</h3>
+                <p class="text-muted">Hãy quay lại sau để đọc những bài viết thú vị!</p>
+            </div>
+        }
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll (keeping simple fade-in/slide-up)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections (adjusting for simplified animations)
+        document.querySelectorAll('.skill-card, .post-card, .stat-item, .about-text, .profile-card').forEach(el => {
+            el.style.opacity = '0'; /* Start hidden */
+            el.style.transform = 'translateY(20px)'; /* Start slightly below */
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out'; /* Only animate opacity and transform */
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        const animateCounter = (element, target) => {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + (target === 500 ? '+' : ''); // Adjust for 500+
+            }, 20);
+        };
+
+        // Animate counters when visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const number = entry.target.querySelector('.stat-number');
+                    const targetText = number.textContent.replace('+', '');
+                    const target = parseInt(targetText);
+                    animateCounter(number, target);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.querySelectorAll('.stat-item').forEach(item => {
+            statsObserver.observe(item);
+        });
+    </script>
+}

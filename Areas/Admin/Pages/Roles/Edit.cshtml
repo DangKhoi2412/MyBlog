@@ -1,0 +1,46 @@
+@page "/Admin/edit-role/{roleid}"
+@model MyApp.Admin.Pages.Roles.EditModel
+
+@{
+    ViewData["title"] = "Cập nhật các roles";
+}
+
+<h1>@ViewData["title"]</h1>
+@await Html.PartialAsync("_StatusMessage", Model.StatusMessage)
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form id="create-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.RoleName" class="form-control" placeholder=""/>
+                <label asp-for="Input.RoleName" class="form-label"></label>
+                <span asp-validation-for="Input.RoleName" class="text-danger"></span>
+            </div>
+            
+            <button id="update-role-button" type="submit" class="btn btn-primary">Lưu</button>
+            <a class="btn btn-primary" asp-page="./Index">Danh sách role</a>
+        </form>
+        <hr>
+        <p>Các đặt tính của Role: 
+            <a asp-page="./AddRoleClaim" asp-route-roleid="@Model.Role?.Id">+ Thêm claim</a>
+        </p>
+        @if(Model.Claims.Count>0){
+            <ul>
+                @foreach(var item in Model.Claims){
+                    <li>
+                        <a asp-page="./EditRoleClaim" asp-route-claimid="@item.Id">
+                            @item.ClaimType: @item.ClaimValue
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

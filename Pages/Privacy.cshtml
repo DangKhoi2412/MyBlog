@@ -1,0 +1,163 @@
+﻿@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Chính sách & Trải nghiệm";
+}
+
+@section Styles {
+<style>
+    .privacy-container {
+        max-width: 900px;
+        margin: 0 auto;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.7;
+        color: #333;
+    }
+
+    .section-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 40px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e9ecef;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #0056b3;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .section-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #222;
+        margin-top: 25px;
+        margin-bottom: 10px;
+    }
+
+    .section-card p, .section-card li {
+        color: #555;
+    }
+
+    .account-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .account-table th, .account-table td {
+        border: 1px solid #dee2e6;
+        padding: 12px 15px;
+        text-align: left;
+    }
+
+    .account-table thead {
+        background-color: #f8f9fa;
+    }
+    
+    .account-table th {
+        font-weight: 600;
+    }
+
+    .account-table code {
+        background-color: #e9ecef;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    
+    .highlight {
+        color: #007bff;
+        font-weight: 600;
+    }
+
+    .icon {
+        font-size: 1.8rem;
+    }
+</style>
+}
+
+<div class="privacy-container">
+    <div class="text-center mb-5">
+        <h1>@ViewData["Title"]</h1>
+        <p class="lead">Tìm hiểu cách chúng tôi bảo vệ dữ liệu và khám phá các tính năng của trang web.</p>
+    </div>
+
+    <div class="section-card">
+        <h2 class="section-title">
+            <i class="fas fa-shield-alt icon"></i>
+            Chính sách riêng tư
+        </h2>
+        <p>Sự riêng tư của bạn rất quan trọng với chúng tôi. Chính sách này giải thích những thông tin chúng tôi thu thập và cách chúng tôi sử dụng nó.</p>
+
+        <h3>1. Thông tin thu thập</h3>
+        <ul>
+            <li><strong>Khi bạn đăng ký tài khoản:</strong> Chúng tôi thu thập địa chỉ email và lưu trữ mật khẩu của bạn dưới dạng băm (không thể giải mã ngược).</li>
+            <li><strong>Khi bạn đăng nhập bằng dịch vụ ngoài (Google, Facebook):</strong> Chúng tôi thu thập thông tin cơ bản như tên và email mà dịch vụ đó cung cấp.</li>
+            <li><strong>Cookies:</strong> Chúng tôi sử dụng cookie để duy trì phiên đăng nhập của bạn (nếu bạn chọn "Lưu thông tin đăng nhập?").</li>
+        </ul>
+
+        <h3>2. Cách chúng tôi sử dụng thông tin</h3>
+        <ul>
+            <li>Để quản lý tài khoản, xác thực và phân quyền truy cập vào các tính năng của blog.</li>
+            <li>Để cá nhân hóa trải nghiệm của bạn, ví dụ như hiển thị các mục quản lý cho Admin.</li>
+            <li>Chúng tôi cam kết <strong class="highlight">không bán hoặc chia sẻ</strong> thông tin cá nhân của bạn cho bất kỳ bên thứ ba nào.</li>
+        </ul>
+    </div>
+
+    <div class="section-card">
+        <h2 class="section-title">
+            <i class="fas fa-user-cog icon"></i>
+            Trải nghiệm các tính năng phân quyền
+        </h2>
+        <p>
+            Khôi Blog sử dụng hệ thống <strong class="highlight">ASP.NET Core Identity</strong> để quản lý vai trò (Roles) và quyền hạn đặc biệt (Claims), giúp kiểm soát chặt chẽ ai có thể xem hoặc làm gì trên trang.
+        </p>
+        <p>Để trải nghiệm các tính năng này, bạn có thể sử dụng các tài khoản mẫu dưới đây: (khuyến khích bạn tự tạo tài khoản rất đơn giản, sau khi tạo xong bạn có thể thử tài khoản admin để xem tính năng): </p>
+
+        <div class="table-responsive">
+            <table class="account-table">
+                <thead>
+                    <tr>
+                        <th>Vai trò / Quyền hạn</th>
+                        <th>Tài khoản (Email)</th>
+                        <th>Mật khẩu</th>
+                        <th>Chức năng có thể thử</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="highlight"><strong>Admin</strong></span>
+                        </td>
+                        <td><code>admin@example.com</code></td>
+                        <td><code>Admin@123</code></td>
+                        <td>
+                            - Thấy mục <strong>Quản lý User</strong> và <strong>Quản lý Role</strong> trên thanh điều hướng.<br>
+                            - Có quyền truy cập các trang quản lý này.<br>
+                            - Có claim <code>can-edit</code> để chỉnh sửa nội dung.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="highlight"><strong>User (Thường)</strong></span>
+                        </td>
+                        <td><code>user@example.com</code></td>
+                        <td><code>User@123</code></td>
+                        <td>
+                            - Tài khoản cơ bản nhất, không có vai trò hay claim đặc biệt.<br>
+                            - Dùng để xem trải nghiệm mặc định của người dùng thông thường.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+﻿@page "/admin/edit-user-claim/{userid?}"
+@model MyApp.Admin.Pages.User.EditUserRoleClaimModel
+@{
+    // Cập nhật tiêu đề động
+    ViewData["title"] = Model.userClaim == null 
+        ? "Thêm Claim cho User" 
+        : "Sửa Claim cho User";
+}
+<h1>@ViewData["title"]: @Model.user?.UserName</h1>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="row">
+    <div class="col-md-6">
+        <form id="create-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ClaimType" class="form-control" placeholder=""/>
+                <label asp-for="Input.ClaimType" class="form-label"></label>
+                <span asp-validation-for="Input.ClaimType" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ClaimValue" class="form-control" placeholder=""/>
+                <label asp-for="Input.ClaimValue" class="form-label"></label>
+                <span asp-validation-for="Input.ClaimValue" class="text-danger"></span>
+            </div>  
+            
+            @if (Model.userClaim != null)
+            {
+                <button id="edit-claim-button" 
+                        asp-page-handler="EditClaim" 
+                        asp-route-claimid="@Model.userClaim.Id"
+                        type="submit" 
+                        class="btn btn-primary">
+                    Cập nhật
+                </button>
+                <button id='delete-claim-button'
+                        asp-page-handler="Delete"
+                        asp-route-claimid="@Model.userClaim.Id"
+                        class="btn btn-danger">
+                    XOA
+                </button>
+            }
+            else
+            {
+                <button id="add-claim-button" 
+                        asp-page-handler="AddClaim" 
+                        asp-route-userid="@Model.user?.Id"
+                        type="submit" 
+                        class="btn btn-primary">
+                    Thêm mới
+                </button>
+            }
+            
+            <a class="btn btn-outline-secondary" asp-page="./AddRole" asp-route-id="@Model.user?.Id">
+                Quay lại
+            </a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

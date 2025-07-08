@@ -1,0 +1,47 @@
+﻿@page "/admin/members"
+@using ASP.NET_Razor_Final.Helpers
+@model MyApp.Admin.Pages.User.IndexModel
+@{
+    ViewData["title"] = "Danh sách các thành viên";
+}
+
+@{
+    var pagingModel = new PagingModel(){
+        currentPage = Model.currentPage,
+        countPages = Model.countPages,
+        generateUrl = (int? p) => Url.Page("./Index", new {trang = p}) 
+    };
+}
+
+<h1>@ViewData["title"]</h1>
+<i>Tống số thành viên @Model.totalUser</i>
+@await Html.PartialAsync("_StatusMessage", Model.StatusMessage)
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-start">Tên người dùng</th>
+            <th class="text-end pe-4">Vai trò</th>
+            <th class="text-end pe-4">Tác vụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.users)
+        {
+            <tr>
+                <td class="align-middle">@user.UserName</td>
+                <td>@user.RoleName</td>
+                <td class="align-middle">
+                    <div class="d-flex justify-content-end">
+                        <a asp-page="./AddRole" asp-route-id="@user.Id" class="btn btn-secondary me-2">Thêm role</a>
+                        <a asp-page="./SetPassword" asp-route-id="@user.Id" class="btn btn-secondary me-2">Đặt mật khẩu</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-center">
+    @await Html.PartialAsync("_Paging", pagingModel)
+</div>

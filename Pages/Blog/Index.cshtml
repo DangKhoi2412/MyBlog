@@ -1,0 +1,126 @@
+@page
+@using ASP.NET_Razor_Final.Helpers;
+@model ASP.NET_Razor_Final.Pages_Blog.IndexModel
+
+@{
+    ViewData["Title"] = "Danh sách bài viết";
+    int i = 0;
+}
+
+@{
+    var pagingModel = new PagingModel(){
+        currentPage = Model.currentPage,
+        countPages = Model.countPages,
+        generateUrl = (int? p) => Url.Page("/Blog/Index", new {trang = p ?? 1})!
+    };
+}
+
+<div class="container-fluid px-3">
+    <h2 class="text-center mb-4">Danh Sách Bài Viết Blog</h2>
+    
+    <!-- Search Section -->
+    <div class="bg-light p-3 rounded mb-4">
+        <div class="row g-3">
+            <div class="col-md-8">
+                <form method="get" asp-page="./Index" class="d-flex gap-2">
+                    <input name="SearchString" class="form-control" 
+                           placeholder="Tìm kiếm bài viết..." 
+                           value="@Model.SearchString">
+                    <button type="submit" class="btn btn-primary flex-shrink-0">
+                        <i class="bi bi-search"></i>
+                        <span class="ms-1">Tìm kiếm</span>
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <a asp-page="Create" class="btn btn-success w-100">
+                    <i class="bi bi-plus-circle me-1"></i>
+                    Tạo Bài Viết Mới
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    @if (Model.Article.Any())
+    {
+        <!-- Mobile View -->
+        <div class="d-md-none">
+            @foreach (var item in Model.Article)
+            {
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <small class="badge bg-secondary">#@(++i)</small>
+                            <small class="text-muted">@Html.DisplayFor(modelItem => item.Created)</small>
+                        </div>
+                        <h6 class="card-title fw-bold mb-3">@Html.DisplayFor(modelItem => item.Title)</h6>
+                        <div class="d-flex gap-2">
+                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm flex-fill">
+                                <i class="bi bi-eye me-1"></i>Xem
+                            </a>
+                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm flex-fill">
+                                <i class="bi bi-pencil me-1"></i>Sửa
+                            </a>
+                            <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm flex-fill">
+                                <i class="bi bi-trash me-1"></i>Xóa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <!-- Desktop View -->
+        <div class="d-none d-md-block">
+            @foreach (var item in Model.Article)
+            {
+                <div class="card mb-2 shadow-sm">
+                    <div class="card-body py-3">
+                        <div class="row align-items-center">
+                            <div class="col-1 text-center">
+                                <span class="fw-bold text-muted">@(++i)</span>
+                            </div>
+                            <div class="col-6">
+                                <h6 class="mb-0 fw-semibold">@Html.DisplayFor(modelItem => item.Title)</h6>
+                            </div>
+                            <div class="col-2 text-center">
+                                <small class="text-muted">@Html.DisplayFor(modelItem => item.Created)</small>
+                            </div>
+                            <div class="col-3 text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-secondary">
+                                        <i class="bi bi-eye me-1"></i>Chi tiết
+                                    </a>
+                                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-warning">
+                                        <i class="bi bi-pencil me-1"></i>Sửa
+                                    </a>
+                                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">
+                                        <i class="bi bi-trash me-1"></i>Xóa
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <div class="d-flex justify-content-center mt-4">
+            @await Html.PartialAsync("_Paging", pagingModel)
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <i class="bi bi-journal-text display-4 text-muted"></i>
+            </div>
+            <h4 class="text-muted">Chưa có bài viết nào</h4>
+            <p class="text-muted mb-4">Hãy tạo bài viết đầu tiên để bắt đầu!</p>
+            <a asp-page="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i>
+                Tạo Bài Viết Ngay
+            </a>
+        </div>
+    }
+</div>

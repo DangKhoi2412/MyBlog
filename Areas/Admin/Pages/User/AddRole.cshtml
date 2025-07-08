@@ -1,0 +1,131 @@
+﻿@page "/admin/add-user-role/{id}"
+@model MyApp.Admin.Pages.User.AddRoleModel
+@{
+    ViewData["Title"] = "Thiết lập role cho User";
+}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0"><i class="fas fa-user-tag me-2"></i>Thiết lập role cho: @Model.user.UserName</h3>
+        </div>
+        
+        <div class="card-body">
+            <partial name="_StatusMessage" for="StatusMessage" />
+
+            <form id="set-role-form" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Phần chọn role -->
+                        <div class="mb-4">
+                            <label asp-for="RoleName" class="form-label fw-bold">Chọn quyền</label>
+                            <select asp-for="RoleName" asp-items="@Model.allRole" multiple class="form-select" size="5">
+                                <option disabled value="">-- Chọn một hoặc nhiều quyền --</option>
+                            </select>
+                            <span asp-validation-for="RoleName" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Nút thao tác -->
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-save me-2"></i>Cập nhật
+                            </button>
+                            <a asp-page="./Index" class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-arrow-left me-2"></i>Quay lại
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Claim từ Role -->
+                        <div class="mb-4 p-3 bg-light rounded">
+                            <h5 class="fw-bold border-bottom pb-2">
+                                <i class="fas fa-shield-alt me-2"></i>Claim từ Role
+                            </h5>
+                            @if (Model.ClaimInRole.Count > 0)
+                            {
+                                <div class="mt-3">
+                                    @foreach (var claim in Model.ClaimInRole)
+                                    {
+                                        <div class="d-flex justify-content-between align-items-center p-2 bg-white mb-2 rounded shadow-sm">
+                                            <span class="badge bg-primary">@claim.ClaimType</span>
+                                            <span class="text-muted">@claim.ClaimValue</span>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="text-muted mt-2">Không có claim từ role</p>
+                            }
+                        </div>
+
+                        <!-- Claim riêng -->
+                        <div class="p-3 bg-light rounded">
+                            <h5 class="fw-bold border-bottom pb-2">
+                                <i class="fas fa-user me-2"></i>Claim riêng 
+                                <a asp-route-userid="@Model.user.Id" asp-page="./EditUserRoleClaim" asp-page-handler="AddClaim" class="btn btn-sm btn-success ms-2">
+                                    + Thêm Claim riêng
+                                </a>
+                            </h5>
+                            
+                            @if (Model.ClaimInUser.Count > 0)
+                            {
+                                <div class="mt-3">
+                                    @foreach (var claim in Model.ClaimInUser)
+                                    {
+                                        <div class="d-flex justify-content-between align-items-center p-2 bg-white mb-2 rounded shadow-sm">
+                                            <a asp-route-claimid="@claim.Id"
+                                            asp-page="./EditUserRoleClaim" 
+                                            asp-page-handler="EditClaim"
+                                            class="text-decoration-none">
+                                                <span class="badge bg-success">@claim.ClaimType</span>
+                                            </a>
+                                            <span class="text-muted">@claim.ClaimValue</span>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="text-muted mt-2">Không có claim riêng</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .form-select {
+            min-height: 150px;
+            border: 1px solid #ced4da;
+        }
+        .badge {
+            min-width: 120px;
+            font-size: 0.85rem;
+            padding: 0.5em;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            padding: 1.25rem 1.5rem;
+        }
+    </style>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('set-role-form').addEventListener('submit', function(e) {
+            if (!confirm('Bạn có chắc muốn thay đổi role cho user này?')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+}

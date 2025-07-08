@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - My Blog</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ASP.NET_Razor_Final.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="~/css/khoi-blog-layout.css" asp-append-version="true" />
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <i class="fas fa-blog"></i> My Blog
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" 
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Index">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Privacy">
+                                <i class="fas fa-shield-alt"></i> Privacy
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Blog/Index">
+                                <i class="fas fa-newspaper"></i> Bài đăng
+                            </a>
+                        </li>
+                        <partial name="_AdminMenu" />
+                    </ul>
+                    <partial name="_LoginPartial"></partial>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container main-container">
+        <main role="main" class="animate-fade-in">
+            <div class="content-wrapper">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5><i class="fas fa-blog"></i> Khôi Blog</h5>
+                    <p>Chia sẻ kiến thức, kinh nghiệm và những câu chuyện thú vị về cuộc sống, công nghệ và nhiều chủ đề hấp dẫn khác.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/angkhoi.313148" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/DangKhoi2412" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h5><i class="fas fa-link"></i> Liên kết nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a asp-area="" asp-page="/Index"><i class="fas fa-home"></i> Trang chủ</a></li>
+                        <li><a asp-area="" asp-page="/Blog/Index"><i class="fas fa-newspaper"></i> Bài đăng</a></li>
+                        <li><a href="#about"><i class="fas fa-user"></i> Giới thiệu</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5><i class="fas fa-tags"></i> Chủ đề</h5>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-code"></i> Lập trình</a></li>
+                        <li><a href="#"><i class="fas fa-laptop"></i> Công nghệ</a></li>
+                        <li><a href="#"><i class="fas fa-lightbulb"></i> Kinh nghiệm</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Chia sẻ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5><i class="fas fa-info-circle"></i> Thông tin</h5>
+                    <ul class="footer-links">
+                        <li><a asp-area="" asp-page="/Privacy"><i class="fas fa-shield-alt"></i> Chính sách riêng tư</a></li>
+                        <li><a asp-page="/Privacy"><i class="fas fa-file-alt"></i> Điều khoản sử dụng</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-rss"></i> RSS Feed</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Khôi Blog. Thiết kế với <i class="fas fa-heart" style="color: #e74c3c;"></i> bởi Khôi.</p>
+            </div>
+        </div>
+    </footer>
+
+   <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        // --- Smooth scrolling for anchor links (Giữ nguyên) ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // --- TỐI ƯU: Hiệu ứng cuộn cho Header ---
+        const header = document.querySelector('.main-header');
+        let lastScrollY = window.scrollY;
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            // Thêm/xóa class 'scrolled' để thay đổi bóng đổ (box-shadow)
+            // Sử dụng ngưỡng nhỏ (10px) để không kích hoạt ngay lập tức
+            if (currentScrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // Thêm/xóa class 'header-hidden' để ẩn/hiện header
+            // Điều kiện 'currentScrollY > 100' để header không bị ẩn ở đầu trang
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Cuộn xuống -> Ẩn header
+                header.classList.add('header-hidden');
+            } else {
+                // Cuộn lên -> Hiện header
+                header.classList.remove('header-hidden');
+            }
+
+            // Cập nhật vị trí cuộn cuối cùng
+            lastScrollY = currentScrollY;
+        };
+        
+        // Lắng nghe sự kiện scroll với tùy chọn 'passive' để cải thiện hiệu suất
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // --- Add loading animation class (Giữ nguyên) ---
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,26 @@
+@page "/blog/xemchitiet/{id:int}"
+@model ASP.NET_Razor_Final.Pages_Blog.DetailsModel
+
+@{
+    ViewData["Title"] = "Chi tiết bài đăng";
+}
+
+<h1>@Model.Article.Title</h1>
+<p>
+    <i>
+        @Html.DisplayNameFor(model => model.Article.Created):
+        @Html.DisplayFor(model => model.Article.Created)
+    </i>
+</p>
+<hr />
+
+<div class="article-content">
+    @Html.Raw(Model.Article.Content)
+</div>
+
+<hr />
+
+<div>
+    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Article.Id">Chỉnh sửa</a>
+    <a class="btn btn-primary ms-2" asp-page="./Index">Danh sách bài đăng</a>
+</div>

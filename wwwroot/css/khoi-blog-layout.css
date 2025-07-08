@@ -1,0 +1,299 @@
+/* Khôi Blog Layout CSS - Simplified & Refined */
+:root {
+    /* Updated Color Palette - Simple, Flat, and Elegant */
+    --primary-color: #007bff; /* A standard, calm blue */
+    --secondary-color: #6c757d; /* Muted grey for secondary elements */
+    --accent-color: #28a745; /* A subtle green for accents, if any */
+    --text-dark: #343a40; /* Dark grey for primary text */
+    --text-light: #ffffff; /* White text for dark backgrounds */
+    --text-muted: #6f757b; /* Lighter grey for secondary text/details */
+    --bg-light: #f8f9fa; /* Light background for sections/cards */
+    --bg-body: #f1f4f9; /* Very light subtle background for the body */
+    --border-color: #dee2e6; /* Light border color */
+    --shadow-light: 0 4px 12px rgba(0,0,0,0.08); /* Lighter, subtle shadow */
+    --border-radius: 8px; /* Slightly smaller, consistent border-radius */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-body); /* Flat, simple body background */
+    min-height: 100vh;
+}
+
+/* Header Styles */
+.main-header {
+    background-color: var(--text-light); /* Solid white background */
+    border-bottom: 1px solid var(--border-color); /* Simple border */
+    box-shadow: var(--shadow-light); /* Lighter shadow */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: box-shadow 0.2s ease; /* Only subtle shadow transition */
+    
+}
+
+.main-header.scrolled {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Slightly more prominent shadow on scroll */
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; /* Slightly smaller font size for refinement */
+    font-weight: 700;
+    color: var(--primary-color); /* Flat primary color */
+    text-decoration: none;
+    transition: color 0.2s ease; /* Simple color transition on hover */
+}
+
+.navbar-brand:hover {
+    color: #0056b3; /* Darker shade on hover */
+}
+
+.navbar-nav .nav-link {
+    position: relative;
+    font-weight: 500;
+    color: var(--text-dark) !important;
+    margin: 0 10px; /* Slightly reduced margin */
+    padding: 8px 0 !important; /* Adjusted padding */
+    transition: color 0.2s ease, font-size 0.2s ease; /* Simple color and font-size transition */
+    text-decoration: none; /* Ensure no default underline */
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color) !important; /* Change text color on hover */
+}
+
+/* Removed .navbar-nav .nav-link::before rule to remove underline */
+
+.navbar-toggler {
+    border: 1px solid var(--border-color); /* Simple border for toggler */
+    padding: 6px 10px; /* Reduced padding */
+    background-color: var(--bg-light); /* Light background for toggler */
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease;
+}
+
+.navbar-toggler:hover {
+    background-color: #e9ecef; /* Slightly darker on hover */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2852, 58, 64, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+
+/* Main Content */
+.main-container {
+    padding: 30px 0; /* Slightly reduced padding */
+    min-height: calc(100vh - 180px); /* Adjusted for simpler footer/header */
+}
+
+.content-wrapper {
+    background-color: var(--text-light); /* Solid white background */
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light); /* Subtle shadow */
+    padding: 30px; /* Reduced padding */
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+    transition: none; /* No animations on hover */
+}
+
+
+/* Footer */
+.main-footer {
+    background-color: var(--text-dark); /* Solid dark background */
+    color: var(--text-light);
+    padding: 30px 0 20px; /* Reduced padding */
+    margin-top: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-footer::before {
+    content: none; /* Explicitly remove gradient line */
+}
+
+.footer-content {
+    display: flex; /* Using flexbox for simpler responsive control */
+    flex-wrap: wrap; /* Allows items to wrap */
+    justify-content: space-between; /* Distribute items evenly */
+    gap: 25px; /* Gap between sections */
+    margin-bottom: 25px;
+}
+
+.footer-section {
+    flex: 1 1 220px; /* Flex-grow, flex-shrink, flex-basis for responsive columns */
+    max-width: 280px; /* Max width for columns to avoid too wide */
+}
+
+.footer-section h5 {
+    font-family: 'Inter', sans-serif; /* Simpler font for footer titles */
+    font-weight: 600;
+    margin-bottom: 15px; /* Reduced margin */
+    color: var(--text-light);
+    position: relative;
+    padding-bottom: 8px; /* Reduced padding */
+    font-size: 1.1rem; /* Smaller font size */
+}
+
+/* Removed .footer-section h5::after rule to remove underline */
+
+.footer-section p {
+    font-size: 0.95rem; /* Slightly smaller text */
+    color: var(--text-muted);
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 8px; /* Reduced margin */
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease; /* Simple color transition */
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.95rem; /* Consistent font size */
+}
+
+.footer-links a:hover {
+    color: var(--text-light); /* White text on hover */
+}
+
+.footer-links a i {
+    margin-right: 8px; /* Reduced margin */
+    width: 18px; /* Slightly smaller icon width */
+    text-align: center;
+}
+
+.social-links {
+    display: flex;
+    gap: 12px; /* Smaller gap */
+    margin-top: 15px; /* Reduced margin */
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Smaller size */
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle background */
+    border-radius: 50%;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: background-color 0.2s ease; /* Simple background transition */
+}
+
+.social-links a:hover {
+    background-color: var(--primary-color); /* Primary color on hover */
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px; /* Reduced padding */
+    border-top: 1px solid rgba(255, 255, 255, 0.08); /* Lighter border */
+    color: var(--text-muted);
+    font-size: 0.85rem; /* Smaller font size */
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+/* Animations - Simplified or Removed */
+.animate-fade-in {
+    opacity: 1; /* Ensure elements are visible by default */
+    transform: translateY(0); /* Ensure elements are in their natural position by default */
+}
+
+/* Custom Scrollbar - Kept as it is aesthetic and non-intrusive */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color); /* Changed to flat primary color */
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0056b3; /* Darker shade on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    /* Adjusted nav-link padding and font-size for mobile menu */
+    .navbar-nav .nav-link {
+        padding: 8px 0 !important; /* Slightly more vertical padding for better touch targets */
+        font-size: 1.15rem; /* Larger text for readability on mobile */
+        margin: 0 8px; /* Slightly more horizontal margin than desktop for spacing */
+    }
+    
+    .content-wrapper {
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .footer-content {
+        flex-direction: column; /* Stack footer sections vertically */
+        align-items: center; /* Center items in column layout */
+        gap: 30px; /* More gap when stacked */
+    }
+
+    .footer-section {
+        text-align: center; /* Center text for stacked sections */
+        max-width: 90%; /* Allow sections to take more width on small screens */
+    }
+
+    /* Removed .footer-section h5::after for mobile too */
+
+    .footer-links {
+        padding-left: 0; /* Remove default list padding */
+    }
+
+    .social-links {
+        justify-content: center; /* Center social links */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+    /* Further adjusted nav-link padding and font-size for very small screens */
+    .navbar-nav .nav-link {
+        font-size: 1.1rem; /* Maintain good readability */
+        padding: 6px 0 !important; /* Adjusted vertical padding */
+    }
+    .main-container {
+        padding: 20px 0; /* Reduced overall padding */
+    }
+    .content-wrapper {
+        padding: 15px; /* Even smaller padding for content */
+    }
+    .footer-section {
+        flex: 1 1 100%; /* Ensure full width on very small screens */
+    }
+}

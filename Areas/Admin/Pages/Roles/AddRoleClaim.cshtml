@@ -1,0 +1,35 @@
+@page "/Admin/add-role-claim/{roleid}"
+@model MyApp.Admin.Pages.Roles.AddRoleClaimModel
+
+@{
+    ViewData["title"] = "Gán đặt tính cho roles";
+}
+
+<h1>@ViewData["title"]: @Model?.role?.Name</h1>
+@await Html.PartialAsync("_StatusMessage", Model?.StatusMessage)
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form id="create-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ClaimType" class="form-control" placeholder=""/>
+                <label asp-for="Input.ClaimType" class="form-label"></label>
+                <span asp-validation-for="Input.ClaimType" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ClaimValue" class="form-control" placeholder=""/>
+                <label asp-for="Input.ClaimValue" class="form-label"></label>
+                <span asp-validation-for="Input.ClaimValue" class="text-danger"></span>
+            </div>  
+            <button id="update-profile-button" type="submit" class="btn btn-primary">Lưu</button>
+            <a class="btn btn-primary" asp-page="./Edit" asp-route-roleid="@Model?.role?.Id">Trờ về</a>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
