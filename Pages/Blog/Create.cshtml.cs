@@ -28,6 +28,9 @@ namespace ASP.NET_Razor_Final.Pages_Blog
         [BindProperty]
         public Article Article { get; set; } = default!;
 
+        [TempData]
+        public string StatusMessage { set; get; }
+
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
@@ -38,7 +41,7 @@ namespace ASP.NET_Razor_Final.Pages_Blog
 
             _context.articles.Add(Article);
             await _context.SaveChangesAsync();
-
+            StatusMessage = $@"Đã tạo bài viết ""{Article.Title}"" ";
             return RedirectToPage("./Index");
         }
     }

@@ -415,3 +415,4 @@ D:\C_sharp\ASP.NET_Razor_Final\obj\Debug\net9.0\refint\ASP.NET_Razor_Final.dll
 D:\C_sharp\ASP.NET_Razor_Final\obj\Debug\net9.0\ASP.NET_Razor_Final.pdb
 D:\C_sharp\ASP.NET_Razor_Final\obj\Debug\net9.0\ASP.NET_Razor_Final.genruntimeconfig.cache
 D:\C_sharp\ASP.NET_Razor_Final\obj\Debug\net9.0\ref\ASP.NET_Razor_Final.dll
+D:\C_sharp\ASP.NET_Razor_Final\obj\Debug\net9.0\ASP.NET_Razor_Final.sourcelink.json

@@ -26,6 +26,9 @@ namespace ASP.NET_Razor_Final.Pages_Blog
         [BindProperty]
         public Article Article { get; set; } = default!;
 
+        [TempData]
+        public string StatusMessage { set; get; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -77,7 +80,7 @@ namespace ASP.NET_Razor_Final.Pages_Blog
                     throw;
                 }
             }
-
+            StatusMessage = $@"Đã chỉnh sửa bài viết ""{Article.Title}"" ";
             return RedirectToPage("./Index");
         }
 

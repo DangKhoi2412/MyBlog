@@ -11,17 +11,14 @@ using Microsoft.AspNetCore.Authorization;
 namespace ASP.NET_Razor_Final.Pages_Blog
 {
     [Authorize(Roles = "Admin,Admin+Vip")]
-    public class DeleteModel : PageModel
+    public class DeleteModel(ASP.NET_Razor_Final.models.AppDbContext context) : PageModel
     {
-        private readonly ASP.NET_Razor_Final.models.AppDbContext _context;
-
-        public DeleteModel(ASP.NET_Razor_Final.models.AppDbContext context)
-        {
-            _context = context;
-        }
+        private readonly ASP.NET_Razor_Final.models.AppDbContext _context = context;
 
         [BindProperty]
         public Article Article { get; set; } = default!;
+        [TempData]
+        public string? StatusMessage { set; get; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -61,7 +58,7 @@ namespace ASP.NET_Razor_Final.Pages_Blog
                 _context.articles.Remove(Article);
                 await _context.SaveChangesAsync();
             }
-
+            StatusMessage = $"Đã xóa bài viết {Article.Title}";
             return RedirectToPage("./Index");
         }
     }

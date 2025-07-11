@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Danh sách bài viết";
     int i = 0;
+    int z = 0;
 }
 
 @{
@@ -40,7 +41,7 @@
             </div>
         </div>
     </div>
-    
+    @await Html.PartialAsync("_StatusMessage")
     @if (Model.Article.Any())
     {
         <!-- Mobile View -->
@@ -78,7 +79,7 @@
                     <div class="card-body py-3">
                         <div class="row align-items-center">
                             <div class="col-1 text-center">
-                                <span class="fw-bold text-muted">@(++i)</span>
+                                <span class="fw-bold text-muted">@(++z)</span>
                             </div>
                             <div class="col-6">
                                 <h6 class="mb-0 fw-semibold">@Html.DisplayFor(modelItem => item.Title)</h6>
